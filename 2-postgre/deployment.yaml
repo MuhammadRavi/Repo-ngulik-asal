@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngulik-postgre-yuk
+  namespace: ngulik-postgre
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ngulik-postgre-yuk
+  template:
+    metadata:
+      labels:
+        app: ngulik-postgre-yuk
+    spec:
+      containers:
+        - name: ngulik-postgre
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+          volumeMounts:
+            - name: postgre-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgre-storage
+          persistentVolumeClaim:
+            claimName: postgre-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ngulik-postgre-yuk
+  namespace: ngulik-postgre
+spec:
+  type: NodePort
+  selector:
+    app: ngulik-postgre-yuk
+  ports:
+    - port: 5432
+      targetPort: 5432
+      nodePort: 30001
+  
+
+
