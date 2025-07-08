@@ -6,6 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce # ReadWriteOnce itu hanya boleh diakses dalam 1 pod (umumnya dinode yang sama)
+  storageClassName: manual
   resources:
     requests:
       storage: 1Gi
