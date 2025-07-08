@@ -4,7 +4,7 @@ metadata:
   name: postgre-pv
 spec:
   capacity:
-    storage: 1 Gi
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
